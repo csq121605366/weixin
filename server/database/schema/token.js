@@ -8,11 +8,11 @@ const TokenSchema = new mongoose.Schema({
     meta: {
         created: {
             type: Date,
-            default: Date.now()
+            default: new Date()
         },
         updated: {
             type: Date,
-            default: Date.now()
+            default: new Date()
         }
     }
 })
@@ -21,10 +21,11 @@ const TokenSchema = new mongoose.Schema({
 
 TokenSchema.pre('save', function(next) {
     if (this.isNew) {
-        this.meta.createdAt = this.meta.updatedAt = Date.now();
+        this.meta.createdAt = this.meta.updatedAt = new Date();
     } else {
-        this.meta.createdAt = Date.now()
+        this.meta.updateAt = new Date();
     }
+    next();
 })
 
 TokenSchema.statics = {
@@ -48,21 +49,14 @@ TokenSchema.statics = {
                 token: data.access_token,
                 expires_in: data.expires_in
             })
-            console.log(token);
-            await token.save(function(error) {
-                console.log('存储成功')
-            })
         }
-
-        // try {
-        //     console.log(token);
-        //     await token.save(function(error) {
-        //         console.log('存储成功')
-        //     })
-        // } catch (e) {
-        //     console.log('存储失败');
-        //     console.error(e);
-        // }
+        await token.save((error, doc) => {
+            if (error) {
+                console.error(error);
+                return false;
+            }
+            console.log('token更新成功');
+        })
         return data;
     }
 }

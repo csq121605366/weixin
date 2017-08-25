@@ -1,32 +1,11 @@
 import Router from 'koa-router';
-import config from '../config'
-import sha1 from 'sha1';
-
-
+import wechatMiddle from '../wechat-lib/middleware';
+import config from '../config';
+import reply from '../wechat/reply';
 export const router = app => {
     const router = new Router();
-    router.get('/wechat-hear', (ctx, next) => {
-        require('../wechat');
-        // 设置微信token
-        const { token } = config.wechat;
-        const {
-            signature,
-            nonce,
-            timestamp,
-            echostr
-        } = ctx.query;
-        const str = [token, timestamp, nonce].sort().join('');
-        const sha = sha1(str);
-        if (sha === signature) {
-            ctx.body = echostr;
-        } else {
-            ctx.body = 'Failed';
-        }
-    });
-    router.post('/wechat-hear', (ctx, next) => {
-
-    });
-
-    app.use(router.routes());
-    app.use(router.allowedMethods());
+    router.all('/wechat-hear', wechatMiddle(config.wechat, reply));
+    app
+        .use(router.routes())
+        .use(router.allowedMethods());
 }
