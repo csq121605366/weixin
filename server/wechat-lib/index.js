@@ -1,8 +1,36 @@
 import request from 'request-promise';
+import formstream from 'formstream';
+import _ from 'lodash';
+import fs from 'fs';
 const baseUrl = 'https://api.weixin.qq.com/cgi-bin/';
 const api = {
-    accessToken: baseUrl + 'token?grant_type=client_credential'
+    accessToken: baseUrl + 'token?grant_type=client_credential',
+    temporary:{
+        upload:baseUrl+'media/upload?',
+        fetch:baseUrl+'media/get?'
+    },
+    permanent:{
+        upload:baseUrl+'material/add_material?',
+        uploadNews:baseUrl+'material/add_news?',
+        uploadNewsPic:baseUrl+'media/uploadimg?',
+        fetch:baseUrl+'material/get_material?',
+        del:baseUrl+'material/del_material?',
+        update:baseUrl+'material/update_news?',
+        count:baseUrl+'material/get_materialcount?',
+        batch:baseUrl+'material/batchget_material?'
+    }
 }
+
+function statFile (filepath){
+    return new Promise((resolve,reject)=>{
+        fs.stat(filepath,(err,stat)=>{
+            if(err)reject(err);
+            resolve(stat);
+        })
+    })
+}
+
+
 export default class Wechat {
     constructor(opts) {
         this.opts = Object.assign({}, opts);
@@ -52,5 +80,24 @@ export default class Wechat {
         } else {
             return false;
         }
+    }
+    // 上传素材
+    uploadMaterial(token,type,material,permanent){
+        let form = {};
+        let url=permanent?api.permanent:api.temporary.upload;
+        if(permanent){
+            _.assign(form,permanent);
+        }
+        if(type === 'pic'){
+            url=api.permanent.uploadNewsPic
+        }else if(type === 'news'){
+            url=api.permanent.uploadNews
+        }else {
+            form = formstream();
+            const stat = await statFile(material)
+
+            form.file('media',material,path.basename(material),stat.size);
+        }
+    
     }
 }

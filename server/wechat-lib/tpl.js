@@ -18,12 +18,12 @@ const tpl =
         <Voice>
             <MediaId><![CDATA[<%= content.mediaId %>]]></MediaId>
         </Voice>
-    <% } else if (msgType==='video') { %>
+    <% } else if (msgType==='video'||msgType==='shortvideo') { %>
         <Video>
             <MediaId><![CDATA[<%= content.mediaId %>]]></MediaId>
             <Title><![CDATA[<%= content.title %>]]></Title>
             <Description><![CDATA[<%= content.description %>]]></Description>
-        </Video> 
+        </Video>
     <% } else if (msgType==='music') { %>
         <Music>
             <Title><![CDATA[<%= content.title %>]]></Title>

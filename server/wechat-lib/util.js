@@ -1,5 +1,8 @@
 import xml2js from 'xml2js';
 import tpl from './tpl';
+import formsteam from 'formsteam';
+
+
 export function parseXML(xml) {
     return new Promise((resolve, reject) => {
         xml2js.parseString(xml, { trim: true }, (err, content) => {
@@ -42,8 +45,11 @@ export function formatMessage(res) {
 export function template(content, message) {
     // content回复内容，message解析后的消息
     let info = {};
-    let type = content.type || 'text';
+    let type = 'text';
     content = content || 'Empty News';
+    if (content && content.type) {
+        type = content.type;
+    }
     if (Array.isArray(content)) {
         type = 'news';
     }
@@ -56,4 +62,18 @@ export function template(content, message) {
     })
     console.log(info);
     return tpl(info);
+}
+
+
+export function uploadMaterial(token,type,material,permanent){
+    let form = {};
+    let url=permanent?api.permanent:api.temporary.upload;
+    if(type === 'pic'){
+        url=api.permanent.uploadNewsPic
+    }else if(type === 'news'){
+        url=api.permanent.uploadNews
+    }else {
+
+    }
+
 }
