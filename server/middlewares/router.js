@@ -2,6 +2,7 @@ import Router from 'koa-router';
 import wechatMiddle from '../wechat-lib/middleware';
 import config from '../config';
 import reply from '../wechat/reply';
+import path from 'path';
 export const router = app => {
     const router = new Router();
     router.all('/wechat-hear', wechatMiddle(config.wechat, reply));

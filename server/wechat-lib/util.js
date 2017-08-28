@@ -1,6 +1,6 @@
 import xml2js from 'xml2js';
 import tpl from './tpl';
-import formsteam from 'formsteam';
+import formsteam from 'formstream';
 
 
 export function parseXML(xml) {
@@ -62,18 +62,4 @@ export function template(content, message) {
     })
     console.log(info);
     return tpl(info);
-}
-
-
-export function uploadMaterial(token,type,material,permanent){
-    let form = {};
-    let url=permanent?api.permanent:api.temporary.upload;
-    if(type === 'pic'){
-        url=api.permanent.uploadNewsPic
-    }else if(type === 'news'){
-        url=api.permanent.uploadNews
-    }else {
-
-    }
-
 }
