@@ -45,6 +45,42 @@ const api = {
         batchUnTag: baseUrl + 'tags/members/batchuntagging?',
         // 获取用户身上的标签列表
         getTagList: baseUrl + 'tags/getidlist?'
+    },
+    user: {
+        // 设置用户备注名
+        remark: baseUrl + 'user/info/updateremark?',
+        // 获取用户基本信息（包括UnionID机制）
+        info: baseUrl + 'user/info?',
+        // 批量获取用户基本信息
+        batchInfo: baseUrl + 'user/info/batchget?',
+        // 获取用户列表
+        fetchUserList: baseUrl + 'user/get?',
+        // 获取公众号的黑名单列表
+        getBlackList: baseUrl + 'tags/members/getblacklist?',
+        // 批量拉黑用户
+        batchBlackUsers: baseUrl + 'tags/members/batchblacklist?',
+        // 批量取消拉黑用户
+        batchUnBlackUsers: baseUrl + 'tags/members/batchunblacklist?'
+    },
+    menu: {
+        // 自定义菜单创建接口
+        create: baseUrl + 'menu/create?',
+        // 自定义菜单查询接口
+        get: baseUrl + 'menu/get?',
+        // 自定义菜单删除接口
+        del: baseUrl + 'menu/delete?',
+        // 创建个性化菜单
+        addCondition: baseUrl + 'menu/addconditional?',
+        // 删除个性化菜单
+        delCondition: baseUrl + 'menu/delconditional?',
+        // 测试个性化菜单匹配结果
+        tryCatch: baseUrl + 'menu/trymatch?',
+        // 获取自定义菜单配置接口
+        getCurrentMenuInfo: baseUrl + 'get_current_selfmenu_info?'
+    },
+    ticket: {
+        get: baseUrl + 'ticket/getticket?',
+
     }
 }
 
@@ -65,6 +101,8 @@ export default class Wechat {
         this.appSecret = opts.appSecret;
         this.getAccessToken = opts.getAccessToken;
         this.saveAccessToken = opts.saveAccessToken;
+        this.getTicket = opts.getTicket;
+        this.saveTicket = opts.saveTicket;
         this.fetchAccessToken();
     }
     async request(options) {
@@ -78,12 +116,15 @@ export default class Wechat {
     }
     async fetchAccessToken() {
         let data = await this.getAccessToken();
-        if (!this.isVaildAccessToken(data, 'access_token')) {
+        if (!this.isVaildToken(data, 'access_token')) {
             data = await this.updateAccessToken();
         }
         await this.saveAccessToken(data);
         return data
     }
+
+
+
     async updateAccessToken() {
         const url = api.accessToken + '&appid=' + this.appID + '&secret=' + this.appSecret;
         const data = await this.request({ url: url });
@@ -93,12 +134,31 @@ export default class Wechat {
         return data;
     }
 
+
+    async fetchTicket() {
+        let data = await this.getTicket();
+        if (!this.isVaildToken(data, 'ticket')) {
+            data = await this.updateTicket();
+        }
+        await this.saveTicket(data);
+        return data
+    }
+
+    async updateTicket(token) {
+        let url = api.ticket.get + '&access_token=' + token + '&type=jsapi';
+        let data = await this.request({ url: url });
+        let now = (new Date().getTime());
+        let expiresIn = now + (data.expires_in - 20) * 1000;
+        data.expires_in = expiresIn;
+        return data;
+    }
+
     /**
      * 
      * @param {*} data 日期
      * @param {*} name 
      */
-    isVaildAccessToken(data, name) {
+    isVaildToken(data, name) {
         // 检测获取的token是否有效
         if (!data || !data[name] || !data.expires_in) {
             return false;
@@ -237,15 +297,25 @@ export default class Wechat {
                 name: name
             }
         }
-        let url = api.tag.create + 'access_token=' + token;
+        let url = api.tags.create + 'access_token=' + token;
         return { method: 'POST', url: url, body: form };
     }
 
+    /**
+     * 获取公众号已创建的标签
+     * @param {*} token 
+     */
     fetchTags(token) {
-        let url = api.tag.fetch + 'access_token' + token;
+        let url = api.tags.fetch + 'access_token=' + token;
         return { url: url };
     }
 
+    /**
+     * 编辑标签
+     * @param {*} token 
+     * @param {*} tagId 
+     * @param {*} name 
+     */
     updateTag(token, tagId, name) {
         let form = {
             tag: {
@@ -257,22 +327,202 @@ export default class Wechat {
         return { methods: 'POST', url: url, body: form };
     }
 
+    /**
+     * 删除标签
+     * 当某个标签下的粉丝超过10w时，后台不可直接删除标签，
+     * @param {*} token 
+     * @param {*} tagId 
+     */
     delTag(token, tagId) {
         let form = {
             tag: {
                 id: tagId
             }
         }
-        let url = api.tag.update + 'access_token=' + token;
+        let url = api.tags.update + 'access_token=' + token;
         return { methods: 'POST', url: url, body: form };
     }
 
+    /**
+     * 获取标签下粉丝列表
+     * @param {*} token 
+     * @param {*} tagId 标签id
+     * @param {*} next_openid 第一个拉取的openid，不填写默认从头开始
+     */
     fetchTagUsers(token, tagId, next_openid = "") {
         let form = {
             tagid: tagId,
             next_openid: next_openid
         }
-        let url = api.tag.fetchUsers + 'access_token=' + token;
+        let url = api.tags.fetchUsers + 'access_token=' + token;
+        return { methods: 'POST', url: url, body: form };
+    }
+
+
+    /**
+     * 批量为用户打标签和删除标签
+     * @param {*} token 
+     * @param {*} openIdList 粉丝列表
+     * @param {*} tagId tag的标识符
+     * @param {*} unTag true代表删除 不填或者false代表增加
+     */
+    batchTag(token, openidlist, tagid, unTag) {
+        if (!Array.isArray(openidlist)) {
+            throw new Error('传入的参数有误');
+        }
+        let form = {
+            openid_list: openidlist,
+            tagid: tagid
+        }
+        let url = unTag ? api.tags.batchUnTag : api.tags.batchTag;
+        url += 'access_token=' + token;
+        console.log(url, form)
+        return { method: 'POST', url: url, body: form };
+    }
+
+    /**
+     * 获取用户身上的标签列表
+     * @param {*} token 
+     * @param {*} openid 用户id
+     */
+    getTagList(token, openid) {
+        let form = {
+            openid: openid
+        }
+        let url = api.tags.getTagList + 'access_token=' + token;
+        return { method: 'POST', url: url, body: form };
+    }
+
+    /**
+     * 设置用户备注名
+     * @param {*} token 
+     * @param {*} openid 用户标识
+     * @param {*} remark 备注名
+     */
+    remarkUser(token, openid, remark) {
+        let form = {
+            openid: openid,
+            remark: remark
+        }
+        let url = api.user.remark + 'access_token=' + token;
+        return { method: 'POST', url: url, body: form };
+    }
+
+    /**
+     * 获取用户基本信息（包括UnionID机制）
+     * @param {*} token 
+     * @param {*} openid 
+     * @param {*} lang 返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
+     */
+    getUserInfo(token, openid, lang = 'zh_CN') {
+        let langList = ['zh_CN', 'zh_TW', 'en'];
+        if (!lang.indexOf(langList) < 0) {
+            throw new Error('传入的参数有误');
+        }
+        let url = api.user.info + `access_token=${token}&openid=${openid}&lang=${lang}`;
+        return { method: 'GET', url: url };
+    }
+
+    /**
+     * 批量获取用户基本信息
+     * @param {*} token 
+     * @param {*} openid 
+     */
+    batchUserInfo(token, openidlist, lang = 'zh_CN') {
+        let langList = ['zh_CN', 'zh_TW', 'en'];
+        if (!Array.isArray(openidlist) || !lang.indexOf(langList) < 0) {
+            throw new Error('传入的参数有误');
+        }
+        let form = {
+            user_list: []
+        }
+        openidlist.forEach(function(element, index) {
+            form.user_list.push({
+                openid: element,
+                lang: lang
+            })
+        }, this);
+
+        let url = api.user.batchInfo + `access_token=${token}`;
+        return { method: 'POST', url: url, body: form };
+    }
+
+    /**
+     * 获取用户列表
+     * @param {*} token 
+     * @param {*} next_openid 
+     */
+    fetchUserList(token, next_openid) {
+        let url = api.user.fetchUserList + `access_token=${token}&next_openid=${next_openid||''}`;
+        return { method: 'GET', url: url };
+    }
+
+    /**
+     * 自定义菜单创建接口
+     * @param {*} token 
+     * @param {*} menu 
+     */
+    createMenu(token, menu) {
+        let url = api.menu.create + 'access_token=' + token;
+        return { method: 'POST', url: url, body: menu };
+    }
+
+    /**
+     * 自定义菜单查询接口
+     * @param {*} token 
+     */
+    getMenu(token) {
+        let url = api.menu.get + 'access_token=' + token;
+        return { method: 'GET', url: url };
+    }
+
+    /**
+     * 自定义菜单删除接口
+     * @param {*} token 
+     */
+    delMenu(token) {
+        let url = api.menu.get + 'access_token=' + token;
+        return { method: 'GET', url: url };
+    }
+
+    /**
+     * 创建个性化菜单
+     * @param {*} token 
+     * @param {*} button 一级菜单数组，个数应为1~3个
+     * @param {*} matchrule 菜单匹配规则
+     */
+    addConditionMenu(token, button, matchrule) {
+        let url = api.menu.addCondition + 'accss_token=' + token;
+        return { method: 'POST', url: url, body: { button, matchrule } };
+    }
+
+    /**
+     * 删除个性化菜单
+     * @param {*} token 
+     * @param {*} menuid menuid为菜单id，可以通过自定义菜单查询接口获取。
+     */
+    delConditionMenu(token, menuid) {
+        let url = api.menu.addCondition + 'accss_token=' + token;
+        return { method: 'POST', url: url, body: { menuid } };
+    }
+
+    /**
+     * 测试个性化菜单匹配结果
+     * @param {*} token 
+     * @param {*} user_id user_id可以是粉丝的OpenID，也可以是粉丝的微信号。
+     */
+    tryCatchMenu(token, user_id) {
+        let url = api.menu.tryCatch + 'accss_token=' + token;
+        return { method: 'POST', url: url, body: { user_id } };
+    }
+
+    /**
+     * 获取自定义菜单配置接口
+     * @param {*} token 
+     */
+    getCurrentMenuInfo(token) {
+        let url = api.menu.getCurrentMenuInfo + 'accss_token=' + token;
+        return { method: 'GET', url: url };
     }
 
 }

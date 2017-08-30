@@ -39,9 +39,7 @@ export default function(opts, reply) {
             await reply.apply(ctx, [ctx, next]);
             let replyBody = ctx.body;
             let msg = ctx.weixin;
-            console.log(replyBody)
             let xml = util.template(replyBody, msg);
-            console.log(xml);
             ctx.status = 200;
             ctx.type = 'application/xml';
             ctx.body = xml;
