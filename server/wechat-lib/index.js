@@ -3,6 +3,9 @@ import formstream from 'formstream';
 import assign from 'lodash/assign';
 import fs from 'fs';
 import path from 'path';
+// 签名算法
+import { sign } from 'util';
+
 const baseUrl = 'https://api.weixin.qq.com/cgi-bin/';
 const api = {
     accessToken: baseUrl + 'token?grant_type=client_credential',
@@ -134,7 +137,9 @@ export default class Wechat {
         return data;
     }
 
-
+    /**
+     * 获取ticket票据
+     */
     async fetchTicket() {
         let data = await this.getTicket();
         if (!this.isVaildToken(data, 'ticket')) {
@@ -144,6 +149,10 @@ export default class Wechat {
         return data
     }
 
+    /**
+     * 更新ticket
+     * @param {*} token 
+     */
     async updateTicket(token) {
         let url = api.ticket.get + '&access_token=' + token + '&type=jsapi';
         let data = await this.request({ url: url });
@@ -525,4 +534,12 @@ export default class Wechat {
         return { method: 'GET', url: url };
     }
 
+    /**
+     * 签名算法
+     * @param {*} ticket 票据
+     * @param {*} url 地址
+     */
+    sign(ticket, url) {
+        return sign(ticket, url);
+    }
 }

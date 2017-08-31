@@ -1,7 +1,7 @@
 import xml2js from 'xml2js';
 import tpl from './tpl';
 import formsteam from 'formstream';
-
+import sha1 from 'sha1';
 
 export function parseXML(xml) {
     return new Promise((resolve, reject) => {
@@ -62,4 +62,27 @@ export function template(content, message) {
     })
     console.log(info);
     return tpl(info);
+}
+
+
+export function signIt(nonce, ticket, timestamp, url) {
+    let res = {
+        ticket,
+        nonceStr,
+        timestamp,
+        url
+    }
+    let string = raw(ret);
+    let sha = sha1(string);
+}
+
+export function sign(ticket, url) {
+    let nonceStr = createNonce();
+    let timestamp = createTimesstamp()
+    let signature = signIt(nonce, ticket, timestamp, url);
+    return {
+        nonceStr,
+        timestamp,
+        signature
+    }
 }
