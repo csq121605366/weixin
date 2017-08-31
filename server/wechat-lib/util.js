@@ -1,6 +1,5 @@
 import xml2js from 'xml2js';
 import tpl from './tpl';
-import formsteam from 'formstream';
 import sha1 from 'sha1';
 
 export function parseXML(xml) {
@@ -60,11 +59,49 @@ export function template(content, message) {
         toUserName: message.FromUserName,
         fromUserName: message.ToUserName
     })
-    console.log(info);
     return tpl(info);
 }
 
 
+/**
+ * 创建随机字符串
+ */
+export function createNonce (){
+    return Math.random().toString(36).substr(2,15);
+}
+
+/**
+ * 创建时间戳
+ */
+export function createTimesstamp(){
+    return parseInt(new Date().getTime()/1000)+'';
+}
+
+/**
+ * 签名格式化
+ * @param {*} args 参数
+ */
+export function raw(args){
+    let keys=Object.keys(args);
+    keys=keys.sort();
+    let newArgs= {};
+    keys.forEach(key=>{
+        newArgs[key.toLowerCase()]=args[key];
+    })
+    let str='';
+    for(let k in newArgs){
+        str+='&'+k+'='+newArgs[k]
+    }
+    return string.substr(1);
+}
+
+/**
+ * 加密
+ * @param {*} nonce 随机字符串
+ * @param {*} ticket 签名
+ * @param {*} timestamp 时间戳 
+ * @param {*} url 地址
+ */
 export function signIt(nonce, ticket, timestamp, url) {
     let res = {
         ticket,
@@ -74,8 +111,14 @@ export function signIt(nonce, ticket, timestamp, url) {
     }
     let string = raw(ret);
     let sha = sha1(string);
+    return sha;
 }
 
+/**
+ * 签名
+ * @param {*} ticket 
+ * @param {*} url 
+ */
 export function sign(ticket, url) {
     let nonceStr = createNonce();
     let timestamp = createTimesstamp()
