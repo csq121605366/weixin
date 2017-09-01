@@ -31,31 +31,28 @@ TicketSchema.pre('save', function(next) {
 TicketSchema.statics = {
     async getTicket() {
         let ticket = await this.findOne({
-            name: 'access_ticket'
+            name: 'ticket'
         }).exec();
-        if (ticket && ticket.ticket) {
-            ticket.access_ticket = ticket.ticket;
-        }
         return ticket;
     },
     async saveTicket(data) {
         let ticket = await this.findOne({ name: 'ticket' }).exec();
         if (ticket) {
-            ticket.ticket = data.access_ticket;
+            ticket.ticket = data.ticket;
             ticket.expires_in = data.expires_in;
         } else {
             ticket = new Ticket({
                 name: 'ticket',
-                ticket: data.access_ticket,
+                ticket: data.ticket,
                 expires_in: data.expires_in
             })
+            console.log('ticket更新成功');
         }
         await ticket.save((error, doc) => {
             if (error) {
                 console.error(error);
                 return false;
             }
-            console.log('ticket更新成功');
         })
         return data;
     }

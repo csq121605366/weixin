@@ -4,7 +4,7 @@ import assign from 'lodash/assign';
 import fs from 'fs';
 import path from 'path';
 // 签名算法
-import { sign } from 'util';
+import { sign } from './util';
 
 const baseUrl = 'https://api.weixin.qq.com/cgi-bin/';
 const api = {
@@ -123,7 +123,7 @@ export default class Wechat {
             data = await this.updateAccessToken();
         }
         await this.saveAccessToken(data);
-        return data
+        return data;
     }
 
 
@@ -140,10 +140,10 @@ export default class Wechat {
     /**
      * 获取ticket票据
      */
-    async fetchTicket() {
+    async fetchTicket(token) {
         let data = await this.getTicket();
         if (!this.isVaildToken(data, 'ticket')) {
-            data = await this.updateTicket();
+            data = await this.updateTicket(token);
         }
         await this.saveTicket(data);
         return data

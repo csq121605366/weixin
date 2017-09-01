@@ -3,7 +3,7 @@ import config from '../config';
 import WechatLib from '../wechat-lib';
 
 const Token = mongoose.model('Token');
-const Ticket = mongoose.model('Token');
+const Ticket = mongoose.model('Ticket');
 
 const wechatConfig = {
     wechat: {

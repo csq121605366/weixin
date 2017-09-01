@@ -49,13 +49,13 @@ TokenSchema.statics = {
                 token: data.access_token,
                 expires_in: data.expires_in
             })
+            console.log('token更新成功');
         }
         await token.save((error, doc) => {
             if (error) {
                 console.error(error);
                 return false;
             }
-            console.log('token更新成功');
         })
         return data;
     }
