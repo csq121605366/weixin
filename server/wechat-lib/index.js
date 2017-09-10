@@ -1,5 +1,4 @@
 import request from 'request-promise';
-import formstream from 'formstream';
 import assign from 'lodash/assign';
 import fs from 'fs';
 import path from 'path';
