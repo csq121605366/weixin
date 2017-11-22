@@ -8,7 +8,6 @@ import mutations from './mutations';
 export default () => {
     return new Vuex.Store({
         state: {
-
         },
         getters,
         actions,

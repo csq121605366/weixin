@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <nuxt/>
+  <div id="app">
+    <div id="main">
+       <nuxt/>
+    </div>
+    <v-nav/>
     <my-footer/>
   </div>
 </template>
 
 <script>
-import MyFooter from '../components/Footer.vue'
+import vNav from '../components/nav.vue';
 
 export default {
   components: {
-    MyFooter
+    vNav
   }
 }
 </script>

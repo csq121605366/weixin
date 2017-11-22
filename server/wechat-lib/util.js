@@ -66,47 +66,45 @@ export function template(content, message) {
 /**
  * 创建随机字符串
  */
-function createNonce() {
-    return Math.random().toString(36).substr(2, 15);
+export function createNonce (){
+    return Math.random().toString(36).substr(2,15);
 }
 
 /**
  * 创建时间戳
  */
-function createTimesstamp() {
-    return parseInt(new Date().getTime() / 1000) + '';
+export function createTimesstamp(){
+    return parseInt(new Date().getTime()/1000)+'';
 }
 
 /**
  * 签名格式化
  * @param {*} args 参数
  */
-function raw(args) {
-    let keys = Object.keys(args);
-    let newArgs = {};
-    let str = '';
-    console.log(keys)
-    keys = keys.sort();
-    console.log(keys)
-    keys.forEach((key) => {
-        newArgs[key.toLowerCase()] = args[key]
-    });
-    for (let k in newArgs) {
-        str += '&' + k + '=' + newArgs[k]
+export function raw(args){
+    let keys=Object.keys(args);
+    keys=keys.sort();
+    let newArgs= {};
+    keys.forEach(key=>{
+        newArgs[key.toLowerCase()]=args[key];
+    })
+    let str='';
+    for(let k in newArgs){
+        str+='&'+k+'='+newArgs[k]
     }
-    return str.substr(1);
+    return string.substr(1);
 }
 
 /**
  * 加密
- * @param {*} nonceStr 随机字符串
+ * @param {*} nonce 随机字符串
  * @param {*} ticket 签名
  * @param {*} timestamp 时间戳 
  * @param {*} url 地址
  */
-function signIt(nonceStr, ticket, timestamp, url) {
-    let ret = {
-        jsapi_ticket: ticket,
+export function signIt(nonceStr, ticket, timestamp, url) {
+    let res = {
+        ticket,
         nonceStr,
         timestamp,
         url
@@ -123,7 +121,7 @@ function signIt(nonceStr, ticket, timestamp, url) {
  */
 export function sign(ticket, url) {
     let nonceStr = createNonce();
-    let timestamp = createTimesstamp();
+    let timestamp = createTimesstamp()
     let signature = signIt(nonceStr, ticket, timestamp, url);
     return {
         nonceStr,

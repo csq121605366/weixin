@@ -1,0 +1,101 @@
+@import './var.scss';
+@import './mixin.scss';
+@import './color.scss';
+.container {
+    @include border-box;
+    padding-bottom: $navHeight;
+    .house {
+        padding: 0 0 $spacing;
+        @include x-scroll;
+        &_items {
+            margin-left: $spacing/2;
+            width: 90%;
+            font-size: 0;
+            display: inline-block;
+            &:first-child {
+                margin-left: $spacing;
+            }
+        }
+        &_desc {
+            width: 100%;
+            padding: $spacing/2 0;
+            @include font-dpr(10px);
+            @include border-box;
+            @include break-word;
+        }
+        &_words {
+            font-size: 1.4em;
+            color: $grey-700;
+        }
+        &_cname {
+            font-size: 1.9em;
+            color: $black;
+        }
+        &_name {
+            font-size: 1.8em;
+            color: $grey-700;
+        }
+    }
+    .characters {
+        padding: 0 $spacing;
+        margin-bottom: $spacing;
+        background: $white;
+        @include border-box;
+        .title {
+            @include font-dpr(19px);
+            padding: $spacing 0;
+            border-top: 1px solid $grey-400;
+        }
+        &_section {
+            padding: 0 $spacing;
+            border-bottom: 1px solid $grey-400;
+            font-size: 0;
+        }
+        &_item:nth-child(2n) {
+            margin-left: 5%;
+        }
+        &_items {
+            width: 47.5%;
+            @include break-word;
+            display: inline-block;
+            margin-bottom: $spacing;
+        }
+        &_desc {
+            width: 100%;
+            padding: $spacing/2 0;
+            @include font-dpr(10px);
+            @include border-box;
+            @include break-word;
+        }
+        &_playedBy {
+            font-size: 1.2em;
+            color: $grey-600;
+        }
+        &_cname {
+            font-size: 1.2em;
+            color: $grey-600;
+        }
+        &_name {
+            font-size: 1.2em;
+            color: $grey-600;
+        }
+    }
+    .city {
+        padding: 0 $spacing $spacing;
+        @include font-dpr(10px);
+        line-height: 2em;
+        position: relative;
+        &_title {
+            font-size: 1.9em;
+        }
+        &_intro {
+            font-size: 1.6em;
+            color: $grey-800;
+        }
+        &_items{
+            font-size: 1.45em;
+            color: $grey-700;
+            margin-top: $spacing*2;
+        }
+    }
+}
