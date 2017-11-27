@@ -58,7 +58,7 @@ export default {
   compouted: {
   },
   methods: {
-    showHouse(item) {
+    focusHouse(item){
       this.$router.push({ path: '/house', query: { id: item._id } })
     },
     showCharacter() {
@@ -89,6 +89,6 @@ export default {
 </script>
 
 <style lang="scss">
-// @import '../static/style/index';
+@import '../static/style/index';
 </style>
 

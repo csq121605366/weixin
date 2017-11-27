@@ -1,4 +1,4 @@
-import {getWechatSignature,getUserByOAuth} from '../util/axios';
+import { getWechatSignature, getUserByOAuth } from '../util/axios';
 
 
 export default {
@@ -8,22 +8,22 @@ export default {
     getUserByOAuth({ commit }, url) {
         return getUserByOAuth(url);
     }
-/*     ,
-    async fetchHouses({ state }) {
-        const res = await Services.fetchHouses();
-        state.houses = res.data.data;
-        return res;
-    },
-    async fetchCharacters({ state }) {
-        const res = await Services.fetchCharacters();
-        state.characters = res.data.data;
-        return res;
-    },
-    async fetchCities({ state }) {
-        const res = await Services.fetchCities();
-        state.cities = res.data.data;
-        return res;
-    } */
+    /*  
+        async fetchHouses({ state }) {
+            const res = await Services.fetchHouses();
+            state.houses = res.data.data;
+            return res;
+        },
+        async fetchCharacters({ state }) {
+            const res = await Services.fetchCharacters();
+            state.characters = res.data.data;
+            return res;
+        },
+        async fetchCities({ state }) {
+            const res = await Services.fetchCities();
+            state.cities = res.data.data;
+            return res;
+        } */
 
 
 
