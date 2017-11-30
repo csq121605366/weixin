@@ -61,7 +61,7 @@ export default {
     focusHouse(item){
       this.$router.push({ path: '/house', query: { id: item._id } })
     },
-    showCharacter() {
+    showCharacter(item) {
       this.$router.push({ path: '/character', query: { id: item._id } })
     },
     getHouses() {

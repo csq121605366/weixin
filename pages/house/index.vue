@@ -12,7 +12,7 @@
         <div class="title">主要角色</div>
         <div class="items" v-for="(item,index) in house.swornMembers" :key="index">
             <div class="members">
-                <img src="item.profile" alt="">
+                <img :src="item.avatar" alt="">
                 <div class="desc">
                     <div class="cname"></div>
                     <div class="intro"></div>
@@ -29,20 +29,24 @@
 
 <script>
 import { mapState } from "vuex";
-import { fetchHouses, fetchCharacters, fetchCities } from "../../util/axios";
+import { fetchHouse } from "../../util/axios";
 export default {
   head() {
     return {
       title: "家族详情"
     };
   },
-  computed: {
-    ...mapState({
-      house: "showHouse"
-    })
+  data() {
+    return {
+      house: []
+    };
   },
+  computed: {},
   beforeCreate() {
     let id = this.$route.query.id;
+    fetchHouse(id).then(res => {
+      this.house = res.data;
+    });
   }
 };
 </script>
