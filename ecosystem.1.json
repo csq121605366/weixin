@@ -1,0 +1,31 @@
+{
+  "apps": [
+    {
+      "name": "weixin",
+      "script": "app.js",
+      "env": {
+        "COMMON_VARIABLE": "true"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }
+  ],
+  "deploy": {
+    "production": {
+      "user": "root",
+      "host": [
+        "47.52.63.21"
+      ],
+      "port": "8020",
+      "ref": "origin/master",
+      "repo": "git@github.com:csq121605366/weixin.git",
+      "path": "/var/www/weixin",
+      "ssh_options": "StrictHostKeyChecking=no",
+      "post-deploy": "yarn install && npm run build && pm2 startOrRestart ecosystem.json --env production",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
