@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "weixin",
-      "script": "start.js",
+      "script": "app.js",
       "env": {
         "COMMON_VARIABLE": "true"
       },
@@ -14,8 +14,8 @@
   "deploy": {
     "production": {
       "user": "root",
-      "key":"./xianggang.pem",
-      "host": ["47.52.63.21"],
+      "key":"xianggang",
+      "host": "47.52.63.21",
       "port": "8020",
       "ref": "origin/master",
       "repo": "git@github.com:csq121605366/weixin.git",
