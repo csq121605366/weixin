@@ -1,11 +1,11 @@
 import axios from 'axios';
-
+import { Message } from 'element-ui';
 
 const baseURL = ' http://www.easy-mock.com/mock/59b4a262e0dc663341a3c043/weixin/api';
 
 const fetch = axios.create({
     baseURL,
-    timeout: 5000,
+    timeout: 5e3,
     withCredentials: true
 });
 
@@ -38,7 +38,7 @@ fetch.interceptors.response.use(response => {
         Message({
             message: '网路好像出问题了',
             type: 'error',
-            duration: 5 * 1000
+            duration: 3e3
         });
         return Promise.reject(error);
     }

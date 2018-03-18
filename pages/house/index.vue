@@ -45,6 +45,7 @@ export default {
   beforeCreate() {
     let id = this.$route.query.id;
     fetchHouse(id).then(res => {
+        console.log(res)
       this.house = res.data;
     });
   }
