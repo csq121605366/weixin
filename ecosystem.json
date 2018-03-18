@@ -14,12 +14,11 @@
   "deploy": {
     "production": {
       "user": "root",
-      "host": [
-        "47.52.63.21"
-      ],
+      "host": "47.52.63.21",
+      "key": "./xianggang.pub",
       "port": "8020",
       "ref": "origin/master",
-      "repo": "git@github.com:csq121605366/weixin.git",
+      "repo": "https://github.com/csq121605366/weixin.git",
       "path": "/var/www/weixin",
       "ssh_options": "StrictHostKeyChecking=no",
       "pre_deploy-local": "echo 'deploy done",
