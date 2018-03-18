@@ -14,13 +14,16 @@
   "deploy": {
     "production": {
       "user": "root",
-      "host": "47.52.63.21",
+      "host": [
+        "47.52.63.21"
+      ],
+      "key": "./xianggang",
       "port": "8020",
       "ref": "origin/master",
       "repo": "https://github.com/csq121605366/weixin.git",
       "path": "/var/www/weixin",
       "ssh_options": "StrictHostKeyChecking=no",
-      "pre_deploy-local": "echo 'deploy done",
+      "pre_deploy-local": "echo '123' ",
       "env": {
         "NODE_ENV": "production"
       }
