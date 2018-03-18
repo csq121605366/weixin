@@ -14,9 +14,7 @@
   "deploy": {
     "production": {
       "user": "root",
-      "host": [
-        "47.52.63.21"
-      ],
+      "host": "47.52.63.21",
       "key": "./xianggang",
       "port": "8020",
       "ref": "origin/master",
