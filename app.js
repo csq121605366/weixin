@@ -3,7 +3,6 @@ require('babel-core/register')({
         'stage-3',
         'latest-node'
     ]
-})
-
+});
 require('babel-polyfill');
 require('./server');
