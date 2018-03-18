@@ -15,7 +15,6 @@
     "production": {
       "user": "root",
       "host": "47.52.63.21",
-      "key": "./xianggang.pub",
       "port": "8020",
       "ref": "origin/master",
       "repo": "https://github.com/csq121605366/weixin.git",
