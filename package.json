@@ -5,7 +5,8 @@
   "author": "caishangqing <121605366@qq.com>",
   "private": true,
   "scripts": {
-    "dev": "nodemon -w ./server -w ./app.js --exec node ./app.js",
+    "dev": "nodemon -w ./app.js --exec node ./app.js ",
+    "devt": "node-inspector ./app.js",
     "build": "nuxt build && backpack build",
     "start": "cross-env NODE_ENV=production node build/main.js",
     "precommit": "npm run lint",
@@ -27,7 +28,6 @@
     "raw-body": "^2.3.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
-    "sass": "^1.0.0-rc.1",
     "sha1": "^1.1.1",
     "source-map-support": "^0.4.15",
     "vue-style-loader": "^3.0.3",

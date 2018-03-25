@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const TicketSchema = new mongoose.Schema({
   name: String,
@@ -14,45 +14,46 @@ const TicketSchema = new mongoose.Schema({
       default: new Date()
     }
   }
-})
+});
 
-TicketSchema.pre('save', function (next) {
+TicketSchema.pre("save", function(next) {
+  console.log(this, this.isNew);
   if (this.isNew) {
-    this.meta.createdAt = this.meta.updatedAt = new Date()
+    this.meta.createdAt = this.meta.updatedAt = new Date();
   } else {
-    this.meta.updateAt = new Date()
+    this.meta.updateAt = new Date();
   }
-  next()
-})
+  next();
+});
 
 TicketSchema.statics = {
-  async getTicket () {
+  async getTicket() {
     let ticket = await this.findOne({
-      name: 'ticket'
-    }).exec()
-    return ticket
+      name: "ticket"
+    }).exec();
+    return ticket;
   },
-  async saveTicket (data) {
-    let ticket = await this.findOne({ name: 'ticket' }).exec()
+  async saveTicket(data) {
+    let ticket = await this.findOne({ name: "ticket" }).exec();
     if (ticket) {
-      ticket.ticket = data.ticket
-      ticket.expires_in = data.expires_in
+      ticket.ticket = data.ticket;
+      ticket.expires_in = data.expires_in;
     } else {
       ticket = new Ticket({
-        name: 'ticket',
+        name: "ticket",
         ticket: data.ticket,
         expires_in: data.expires_in
-      })
-      console.log('ticket更新成功')
+      });
+      console.log("ticket更新成功");
     }
     await ticket.save((error, doc) => {
       if (error) {
-        console.error(error)
-        return false
+        console.error(error);
+        return false;
       }
-    })
-    return data
+    });
+    return data;
   }
-}
+};
 
-let Ticket = mongoose.model('Ticket', TicketSchema)
+let Ticket = mongoose.model("Ticket", TicketSchema);

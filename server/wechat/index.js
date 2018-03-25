@@ -6,6 +6,7 @@ import wechatOAuth from '../wechat-lib/oauth'
 const Token = mongoose.model('Token')
 const Ticket = mongoose.model('Ticket')
 
+
 const wechatConfig = {
   wechat: {
     appID: config.wechat.appID,
