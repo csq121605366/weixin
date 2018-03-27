@@ -30,7 +30,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { fetchCharacter } from "../../util/axios";
+import { fetchCharacter } from "../../util/api";
 export default {
   head() {
     return {

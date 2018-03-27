@@ -29,7 +29,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { fetchHouse } from "../../util/axios";
+import { fetchHouse } from "../../util/api";
 export default {
   head() {
     return {

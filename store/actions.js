@@ -1,14 +1,23 @@
-import { getWechatSignature, getUserByOAuth } from '../util/axios';
+import { getWechatSignature, getUserByOAuth } from "../util/api.js";
 
-
-export default {
-    getWechatSignature({ commit }, url) {
-        return getWechatSignature(url);
-    },
-    getUserByOAuth({ commit }, url) {
-        return getUserByOAuth(url);
-    }
-    /*  
+const actions = {
+  wechatSignature({ commit }, url) {
+    return new Promise((response, reject) => {
+      getWechatSignature(url).then(res => {
+        console.log(res);
+        if (res.success) {
+          commit("SET_WXJSSDKPARAMS", res.params);
+          response(res);
+        } else {
+          reject(res);
+        }
+      });
+    })
+  },
+  getUserByOAuth({ commit }, url) {
+    return getUserByOAuth(url);
+  }
+  /*  
         async fetchHouses({ state }) {
             const res = await Services.fetchHouses();
             state.houses = res.data.data;
@@ -24,7 +33,5 @@ export default {
             state.cities = res.data.data;
             return res;
         } */
-
-
-
-}
+};
+export default actions;

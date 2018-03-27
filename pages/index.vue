@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { fetchHouses, fetchCharacters, fetchCities } from '../util/axios';
+import { fetchHouses, fetchCharacters, fetchCities } from '../util/api';
 export default {
   head() {
     return {
