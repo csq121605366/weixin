@@ -1,6 +1,6 @@
 import { getWechatSignature, getUserByOAuth } from "../util/api.js";
 
-const actions = {
+export default {
   wechatSignature({ commit }, url) {
     return new Promise((response, reject) => {
       getWechatSignature(url).then(res => {
@@ -34,4 +34,3 @@ const actions = {
             return res;
         } */
 };
-export default actions;

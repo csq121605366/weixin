@@ -1,53 +1,33 @@
-
 import fetch from './axios.js';
 
 export function getWechatSignature(url) {
-    return fetch({
-        url: '/wechat-signature',
-        method: 'get',
-        params: { url }
-    })
-};
+  return fetch({url: '/wechat-signature', method: 'get', params: {
+      url
+    }})
+}
 
 export function getUserByOAuth(url) {
-    return fetch({
-        url: '/wechat-oauth',
-        method: 'get',
-        params: { url }
-    })
-};
+  return fetch({url: '/wechat-oauth', method: 'get', params: {
+      url
+    }})
+}
 
 export function fetchHouses() {
-    return fetch({
-        url: '/houses',
-        method: 'get'
-    })
-};
+  return fetch({url: '/houses', method: 'get'})
+}
 
 export function fetchHouse(id) {
-    return fetch({
-        url: `/houses/${id}`,
-        method: 'get'
-    })
-};
+  return fetch({url: `/houses/detail`, method: 'get'})
+}
 
 export function fetchCharacters() {
-    return fetch({
-        url: '/characters',
-        method: 'get'
-    })
-};
+  return fetch({url: '/characters', method: 'get'})
+}
 
 export function fetchCharacter(id) {
-    return fetch({
-        url: `/characters/${id}`,
-        method: 'get'
-    })
-};
+  return fetch({url: `/characters/detail`, method: 'get'})
+}
 
 export function fetchCities() {
-    return fetch({
-        url: '/cities',
-        method: 'get'
-    })
-};
+  return fetch({url: '/cities', method: 'get'})
+}

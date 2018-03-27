@@ -2,16 +2,16 @@
 		<nav v-if="navVisible" id="nav">
 			<nuxt-link v-for="(item,index) in navList" :to="item.path" :key="index">
 				<div v-if="index==0">
-					<img v-if="activeRoute !==item.name" src="~static/img/home.png" alt="">
-					<img v-else src="~static/img/home-selected.png" alt="">
+					<img v-if="activeRoute !==item.name" src="~assets/img/home.png" alt="">
+					<img v-else src="~assets/img/home-selected.png" alt="">
 				</div>
 				<div v-if="index==1">
-					<img v-if="activeRoute !==item.name" src="~static/img/shopping.png" alt="">
-					<img v-else src="~static/img/shopping-selected.png" alt="">
+					<img v-if="activeRoute !==item.name" src="~assets/img/shopping.png" alt="">
+					<img v-else src="~assets/img/shopping-selected.png" alt="">
 				</div>
 				<div v-else>
-					<img v-if="activeRoute !==item.name" src="~static/img/user.png" alt="">
-					<img v-else src="~static/img/user-selected.png" alt="">
+					<img v-if="activeRoute !==item.name" src="~assets/img/user.png" alt="">
+					<img v-else src="~assets/img/user-selected.png" alt="">
 				</div>
 			</nuxt-link>
 		</nav>

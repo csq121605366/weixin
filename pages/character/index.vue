@@ -55,5 +55,5 @@ export default {
 </script>
 
 <style lang="scss">
-// @import "../../static/style/character";
+// @import "~assets/sass/character";
 </style>

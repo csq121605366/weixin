@@ -41,43 +41,63 @@
 </template>
 
 <script>
-import { fetchHouses, fetchCharacters, fetchCities } from '../util/api';
+import { fetchHouses, fetchCharacters, fetchCities } from "~/util/api";
 export default {
   head() {
     return {
-      title: '冰火脸谱'
-    }
+      title: "冰火脸谱"
+    };
   },
   data() {
     return {
       houses: [],
       characters: [],
       cities: []
-    }
+    };
   },
-  compouted: {
+  mounted() {
+    async.waterfall(
+      [
+        function(callback) {
+          callback(null, "one", "two");
+        },
+        function(arg1, arg2, callback) {
+          // arg1 now equals 'one' and arg2 now equals 'two'
+          callback(null, "three");
+        },
+        function(arg1, callback) {
+          // arg1 now equals 'three'
+          callback(null, "done");
+        }
+      ],
+      function(err, result) {
+        // result now equals 'done'
+        console.log(result);
+      }
+    );
+    
   },
   methods: {
-    focusHouse(item){
-      this.$router.push({ path: '/house', query: { id: item._id } })
+    focusHouse(item) {
+      this.$router.push({ path: "/house", query: { id: item._id } });
     },
     showCharacter(item) {
-      this.$router.push({ path: '/character', query: { id: item._id } })
+      this.$router.push({ path: "/character", query: { id: item._id } });
     },
     getHouses() {
       fetchHouses().then(res => {
         this.houses = res.data;
-      })
+      });
     },
     getCharacters() {
       fetchCharacters().then(res => {
         this.characters = res.data;
-      })
+      });
     },
     getCities() {
       fetchCities().then(res => {
         this.cities = res.data;
-      })
+      });
     }
   },
   created() {
@@ -85,10 +105,10 @@ export default {
     this.getCharacters();
     this.getCities();
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import '../static/style/index';
+@import "~assets/sass/index";
 </style>
 

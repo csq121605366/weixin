@@ -1,8 +1,9 @@
 import sha1 from "sha1";
 import getRawBody from "raw-body";
 import * as util from "./util";
+import reply from '../wechat/reply';
 
-export default function(opts, reply) {
+export default function(opts) {
   return async function wechatMiddle(ctx, next) {
     // 设置微信token
     const { token } = opts;

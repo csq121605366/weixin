@@ -1,4 +1,3 @@
-const state = {
+export default {
   WXJSSDKPARAMS: null
 };
-export default state;
