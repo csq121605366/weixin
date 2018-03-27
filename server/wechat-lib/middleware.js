@@ -1,7 +1,6 @@
 import sha1 from "sha1";
 import getRawBody from "raw-body";
 import * as util from "./util";
-// import reply from "../wechat/reply";
 
 export default function(opts, reply) {
   return async function wechatMiddle(ctx, next) {
@@ -28,12 +27,8 @@ export default function(opts, reply) {
         limit: "1mb",
         encoding: ctx.charset
       });
-      console.log(data);
       // 解析xml
       let content = await util.parseXML(data);
-      debugger;
-      console.log(content);
-      debugger;
       // 格式化信息
       let message = util.formatMessage(content.xml);
       // 将微信内容挂在ctx上

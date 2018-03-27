@@ -18,7 +18,6 @@ export function formatMessage(res) {
     for (let i = 0; i < keys.length; i++) {
       let item = res[keys[i]];
       let key = keys[i];
-
       if (!(item instanceof Array) || item.length === 0) {
         continue;
       }
@@ -34,7 +33,7 @@ export function formatMessage(res) {
         for (let j = 0; j < item.length; j++) {
           message[key].push(formatMessage(item[j]));
         }
-      }
+      } 
     }
   }
   return message;
@@ -106,7 +105,7 @@ export function raw(args) {
  * @param {*} url 地址
  */
 export function signIt(nonceStr, ticket, timestamp, url) {
-  let res = {
+  let ret = {
     ticket,
     nonceStr,
     timestamp,

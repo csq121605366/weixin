@@ -1,3 +1,7 @@
+/**
+ * 微信相关接口
+ */
+
 import { getWechat, getOAuth } from '../wechat';
 
 let wechatApi = getWechat();

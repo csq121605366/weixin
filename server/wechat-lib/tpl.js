@@ -1,8 +1,7 @@
 // 微信消息的回复模板
 import template from 'art-template';
 
-const tpl =
-    `
+const tpl = `
 <xml>
     <ToUserName><![CDATA[<%= toUserName %>]]></ToUserName>
     <FromUserName><![CDATA[<%= fromUserName %>]]></FromUserName>

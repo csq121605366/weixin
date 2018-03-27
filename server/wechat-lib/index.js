@@ -94,6 +94,7 @@ function statFile(filepath) {
   });
 }
 
+// 抛出Wechat
 export default class Wechat {
   constructor(opts) {
     this.opts = Object.assign({}, opts);
@@ -193,7 +194,6 @@ export default class Wechat {
     let tokenData = await this.fetchAccessToken();
     let options = this[operation](tokenData.token, ...args);
     let data = await this.request(options);
-    console.log(data);
     return data;
   }
 
@@ -288,7 +288,7 @@ export default class Wechat {
   }
 
   /**
-   *
+   *  返回素材总数
    * @param {*} token token
    * @param {*} options 参数
    */

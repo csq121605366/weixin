@@ -8,7 +8,6 @@ let client = mp.getWechat();
 
 export default async(ctx, next) => {
     const message = ctx.weixin;
-    console.log("message", message);
     if (message.MsgType === 'event') {
         if (message.Event === 'subscribe') {
             ctx.body = tip;
@@ -21,7 +20,6 @@ export default async(ctx, next) => {
         } else if (message.Event === 'pic_sysphoto') {
             ctx.body = message.Count + 'photos sent';
         }
-
     } else if (message.MsgType === 'text') {
         // await axios.post(tuling.url, tuling.param).then(res => {
         //     if (res.data.intent.code == 10004) {
@@ -35,7 +33,6 @@ export default async(ctx, next) => {
             data = await client.handle('getMenu');
         } else if (message.Content === '2') {
             let menu = require('./menu.js');
-            console.log("menu", menu);
             data = await client.handle('createMenu', menu);
         } else if (message.Content === '3') {
             data = await client.handle('delMenu');
@@ -44,8 +41,6 @@ export default async(ctx, next) => {
         } else if (message.Content === '5') {
             data = await client.handle('getTagList', 'oL4Apwv4Oz42DKG3Ngr0bstgRavQ');
         }
-
-        console.log(data);
 
     } else if (message.MsgType === 'image') {
         ctx.body = {

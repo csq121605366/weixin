@@ -12,7 +12,6 @@ const api = {
     access_token: baseUrl + 'access_token?',
     refresh_token: baseUrl + 'refresh_token?',
     userInfo: baseUrl + 'userinfo?',
-
 }
 
 

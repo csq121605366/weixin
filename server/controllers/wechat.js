@@ -1,3 +1,9 @@
+
+/**
+ * 前端页面请求返回数据的接口控制
+ * 微信相关的控制逻辑
+ */
+
 import * as api from '../api'
 import { parse as urlParse } from 'url'
 import { parse as queryParse } from 'querystring'

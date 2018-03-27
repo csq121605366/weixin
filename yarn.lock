@@ -5747,6 +5747,10 @@ sass-loader@^6.0.6:
     lodash.tail "^4.1.1"
     pify "^3.0.0"
 
+sass@^1.0.0-rc.1:
+  version "1.0.0-rc.1"
+  resolved "http://registry.npm.taobao.org/sass/download/sass-1.0.0-rc.1.tgz#4e46d6af256bfce5a153658da223be42dc412a9a"
+
 sax@>=0.6.0, sax@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
