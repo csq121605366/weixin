@@ -4,7 +4,7 @@ import {Message} from "element-ui";
 // const baseURL =
 // "http://www.easy-mock.com/mock/59b4a262e0dc663341a3c043/weixin/api";
 
-const baseURL = "https://csq.weixin.caishangqing.com";
+const baseURL = "http://csq.weixin.caishangqing.com";
 // const baseURL = "http://rap2api.taobao.org/app/mock/data/8528";
 
 const fetch = axios.create({baseURL, timeout: 5e3, withCredentials: true});

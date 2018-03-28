@@ -1,5 +1,4 @@
 import request from "request-promise";
-import assign from "lodash/assign";
 import fs from "fs";
 import path from "path";
 // 签名算法
@@ -208,7 +207,7 @@ export default class Wechat {
     let form = {};
     let url = permanent ? api.permanent.upload : api.temporary.upload;
     if (permanent) {
-      assign(form, permanent);
+      form = Object.assign({}, form, permanent);
     }
     if (type === "pic") {
       url = api.permanent.uploadNewsPic;
@@ -281,7 +280,7 @@ export default class Wechat {
     let form = {
       media_id: mediaId
     };
-    assign(form, news);
+    from = Object.assign({}, form, news);
     let url =
       api.permanent.update + "access_token=" + token + "&media_id=" + mediaId;
     return { method: "GET", url: url, body: form };

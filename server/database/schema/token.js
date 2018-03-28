@@ -7,11 +7,11 @@ const TokenSchema = new mongoose.Schema({
   meta: {
     created: {
       type: Date,
-      default: new Date()
+      default: Date.now()
     },
     updated: {
       type: Date,
-      default: new Date()
+      default: Date.now()
     }
   }
 });
@@ -19,9 +19,9 @@ const TokenSchema = new mongoose.Schema({
 // 每次执行tokenSchema都会执行
 TokenSchema.pre("save", function(next) {
   if (this.isNew) {
-    this.meta.createdAt = this.meta.updatedAt = new Date();
+    this.meta.createdAt = this.meta.updatedAt = Date.now();
   } else {
-    this.meta.updateAt = new Date();
+    this.meta.updateAt = Date.now();
   }
   next();
 });

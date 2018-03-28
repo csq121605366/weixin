@@ -9,7 +9,7 @@ module.exports = {
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "Nuxt.js project" }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "~static/favicon.ico" }],
+    link: [{ rel: "icon", type: "image/x-icon", href: "./static/favicon.ico" }],
     script: [{ src: "http://res.wx.qq.com/open/js/jweixin-1.2.0.js" }]
   },
   // 全部引用的时候需要用到

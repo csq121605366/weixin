@@ -2,6 +2,7 @@ import { getWechatSignature, getUserByOAuth } from "../util/api.js";
 
 export default {
   wechatSignature({ commit }, url) {
+    console.log(url)
     return new Promise((response, reject) => {
       getWechatSignature(url).then(res => {
         console.log(res);

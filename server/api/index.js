@@ -2,6 +2,6 @@
 // './wechat'; module.exports = {     getSignatureAsync,     getAuthorizeURL,
 //  getUserByCode }
 
-import * as wechat from './wechat';
+// import * as wechat from './wechat';
 
-module.exports = Object.assign({}, wechat);
+// module.exports = Object.assign({}, wechat);

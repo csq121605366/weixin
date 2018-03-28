@@ -5,7 +5,7 @@ import { resolve } from "path";
 
 const models = resolve(__dirname, "../database/schema");
 
-// ~表示取反 也就是!
+
 
 fs
   .readdirSync(models)

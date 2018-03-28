@@ -33,7 +33,7 @@ export function formatMessage(res) {
         for (let j = 0; j < item.length; j++) {
           message[key].push(formatMessage(item[j]));
         }
-      } 
+      }
     }
   }
   return message;
@@ -94,7 +94,7 @@ export function raw(args) {
   for (let k in newArgs) {
     str += "&" + k + "=" + newArgs[k];
   }
-  return string.substr(1);
+  return str.substr(1);
 }
 
 /**
@@ -104,15 +104,16 @@ export function raw(args) {
  * @param {*} timestamp 时间戳
  * @param {*} url 地址
  */
-export function signIt(nonceStr, ticket, timestamp, url) {
+export function signIt(noncestr, ticket, timestamp, url) {
   let ret = {
-    ticket,
-    nonceStr,
+    jsapi_ticket: ticket,
+    noncestr,
     timestamp,
     url
   };
-  let string = raw(ret);
-  let sha = sha1(string);
+  let str = raw(ret);
+  console.log(str);
+  let sha = sha1(str);
   return sha;
 }
 
@@ -122,11 +123,11 @@ export function signIt(nonceStr, ticket, timestamp, url) {
  * @param {*} url
  */
 export function sign(ticket, url) {
-  let nonceStr = createNonce();
+  let noncestr = createNonce();
   let timestamp = createTimesstamp();
-  let signature = signIt(nonceStr, ticket, timestamp, url);
+  let signature = signIt(noncestr, ticket, timestamp, url);
   return {
-    nonceStr,
+    noncestr,
     timestamp,
     signature
   };

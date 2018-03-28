@@ -19,25 +19,26 @@ export default {
   },
   beforeMount() {
     const wx = window.wx;
-    const url = window.location.href;
+    const url = location.href.split("#")[0];
     this.$store.dispatch("wechatSignature", url).then(res => {
-    let config = Object.assign({}, this.$store.getters("get_WXJSSDKPARAMS"), {
-      debug: true,
-      jsApiList: [
-        "previewImage",
-        "chooseImage",
-        "uploadImage",
-        "downloadImage",
-        "onMenuShareTimeLine",
-        "hideAllNonBaseMenuItem",
-        "showMenuItems"
-      ]
-    });
-    wx.config(config);
-    wx.ready(() => {
-      wx.hideAllNonBaseMenuItem();
-      console.log("success");
-    });
+      let param = this.$store.getters["get_WXJSSDKPARAMS"];
+      param.nonceStr = param.noncestr;
+      let config = Object.assign({}, param, {
+        debug: true,
+        jsApiList: [
+          "previewImage",
+          "chooseImage",
+          "uploadImage",
+          "downloadImage",
+          "onMenuShareTimeLine",
+          "showMenuItems"
+        ]
+      });
+      console.log(config);
+      wx.config(config);
+      wx.ready(() => {
+        console.log("success");
+      });
     });
   }
 };
