@@ -12,22 +12,27 @@ export function getUserByOAuth(url) {
     }})
 }
 
-export function fetchHouses() {
-  return fetch({url: '/api/houses', method: 'get'})
+export function allHouses() {
+  return fetch({url: '/houses', method: 'get'})
 }
 
-export function fetchHouse(id) {
-  return fetch({url: `/api/houses/detail`, method: 'get'})
+export function focusHouse(id) {
+  return fetch({url: `/houses/detail`, method: 'get'})
 }
 
-export function fetchCharacters() {
-  return fetch({url: '/api/characters', method: 'get'})
+export function povCharacters() {
+  return fetch({url: '/characters', method: 'get'})
 }
 
-export function fetchCharacter(id) {
-  return fetch({url: `/api/characters/detail`, method: 'get'})
+export function focusCharacter(id) {
+  return fetch({url: `/characters/detail`, method: 'get'})
 }
+
 
 export function fetchCities() {
-  return fetch({url: '/api/cities', method: 'get'})
+  return fetch({url: '/cities', method: 'get'})
+}
+
+export function allProducts(){
+  return fetch({url: '/products', method: 'get'})
 }

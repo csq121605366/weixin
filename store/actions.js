@@ -1,7 +1,17 @@
-import { getWechatSignature, getUserByOAuth } from "../util/api.js";
+import {
+  getWechatSignature,
+  getUserByOAuth,
+  allHouses,
+  focusHouse,
+  povCharacters,
+  allProducts,
+  focusCharacter
+} from "../util/api.js";
 
 export default {
-  wechatSignature({ commit }, url) {
+  wechatSignature({
+    commit
+  }, url) {
     console.log(url)
     return new Promise((response, reject) => {
       getWechatSignature(url).then(res => {
@@ -15,23 +25,44 @@ export default {
       });
     })
   },
-  getUserByOAuth({ commit }, url) {
+  getUserByOAuth({
+    commit
+  }, url) {
     return getUserByOAuth(url);
+  },
+
+  async fetchHouses({state}) {
+    const res = await allHouses().then(res => {
+      state.houses = res.data
+    })
+  },
+
+  async focusHouse({state}) {
+    const res = await focusHouse().then(res => {
+      state.focusHouse = res.data
+    })
+  },
+
+  async fetchCharacters({state}) {
+    const res = await povCharacters().then(res => {
+      state.characters = res.data
+    })
+
+  },
+  async focusCharacter({
+    state
+  }, _id) {
+    if (_id === state.focusCharacter._id) 
+      return
+    const res = await focusCharacter(_id).then(res => {
+      state.focusCharacter = res.data
+    })
+
+  },
+
+  async fetchProducts({state}) {
+    const res = await allProducts().then(res => {
+      state.products = res.data
+    })
   }
-  /*  
-        async fetchHouses({ state }) {
-            const res = await Services.fetchHouses();
-            state.houses = res.data.data;
-            return res;
-        },
-        async fetchCharacters({ state }) {
-            const res = await Services.fetchCharacters();
-            state.characters = res.data.data;
-            return res;
-        },
-        async fetchCities({ state }) {
-            const res = await Services.fetchCities();
-            state.cities = res.data.data;
-            return res;
-        } */
 };

@@ -1,4 +1,4 @@
-const getters = {
+export default{
   get_WXJSSDKPARAMS: state => state.WXJSSDKPARAMS
 };
-export default getters;
+

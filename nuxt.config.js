@@ -15,7 +15,7 @@ module.exports = {
   // 全部引用的时候需要用到
   // 'element-ui/lib/theme-chalk/index.css'
   css: [
-    { src: "~assets/sass/base.scss", lang: "scss" },
+    { src: "~assets/sass/base.sass", lang: "sass" },
     { src: "element-ui/lib/theme-chalk/index.css", lang: "css" }
   ],
   /*

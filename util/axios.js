@@ -2,10 +2,10 @@ import axios from "axios";
 import {Message} from "element-ui";
 
 // const baseURL =
-// "http://www.easy-mock.com/mock/59b4a262e0dc663341a3c043/weixin/api";
-
-const baseURL = "http://csq.weixin.caishangqing.com";
-// const baseURL = "http://rap2api.taobao.org/app/mock/data/8528";
+// "http://www.easy-mock.com/mock/59b4a262e0dc663341a3c043/weixin/api"; const
+// baseURL = "http://csq.weixin.caishangqing.com";
+// const baseURL = "http://rap2api.taobao.org/app/mock/8528/GET";
+const baseURL = "http://localhost:8080/api";
 
 const fetch = axios.create({baseURL, timeout: 5e3, withCredentials: true});
 fetch

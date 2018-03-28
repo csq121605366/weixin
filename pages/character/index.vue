@@ -1,59 +1,50 @@
-<template>
-<section class="container">
-    <div v-if="character" class="character-header">
-        {{character.images.length}}
-        <!-- <img :src="character.images[character.images.length-1]" alt=""> -->
-        <div class="media">
-            <img :src="character.profile" alt="">
-            <div class="desc">
-                <div class="names">
-                    <p class="cname">{{character.cname}}</p>
-                    <p class="name">{{character.name}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="charater-body">
-    <div class="intro">
-        <p>{{character.intro}}</p>
-    </div>
-    <div class="stills">
-        <img v-for="(item,index) in character.images" :key="index" :src="item" alt="">
-    </div>
-    <div class="items" v-for="(item,index) in character.sections" :key="index">
-        <div class="title">{{item.title}}</div>
-        <div class="body" >{{item.content}}</div>
-    </div>
-    </div>
-</section>
+<template lang="pug">
+.container
+  .focusCharacters-header
+    img.focusCharacters-header-bg(v-if="character.images" :src="character.images[character.images.length-1]")
+    .focusCharacters-media
+        img(v-if='character.profile', :src="character.profile[character.profile.length-1]")
+        .focusCharacters-text
+        .names
+          p.cname {{ character.cname }}
+          p.name {{ character.name }}
+        //- .allegiances
+        //-   p 史塔克家族
+        //-   p 无面者
+        //- span.born {{ character.nmId }}
+  
+  .focusCharacters-body
+    .focusCharacters-intro
+      p {{ character.intro }}
+    
+    .focusCharacter-stills
+      img(v-for='item in character.images', :src="item")
+  
+    .focusCharacter-item(v-for='item in character.sections')
+      .focusCharacter-item-title {{ item.title }}
+      .focusCharacter-item-body(v-for='text in item.content') {{ text }}
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { fetchCharacter } from "../../util/api";
 export default {
   head() {
     return {
       title: "家族详情"
     };
   },
-  data() {
-    return {
-      character: null
-    };
+  computed: {
+    ...mapState({
+      character: "focusCharacter"
+    })
   },
-  computed: {},
   beforeCreate() {
     let id = this.$route.query.id;
-    console.log(id);
-    fetchCharacter(id).then(res => {
-      this.character = res.data;
-    //   console.log(this.character);
-    });
+    this.$store.dispatch("focusCharacter", id);
   }
 };
 </script>
 
-<style lang="scss">
-// @import "~assets/sass/character";
+<style scoped lang="sass">
+@import "~assets/sass/characters";
 </style>
