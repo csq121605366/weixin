@@ -23,7 +23,6 @@ export default class Route {
             .app
             .use(cors({
                 origin: function (ctx) {
-                    console.log(ctx.url)
                     if (/\/api\//.test(ctx.url)) {
                         return
                         "http://localhost:8080"; // 这样就能只允许 http://localhost:8080 这个域名的请求了

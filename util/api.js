@@ -13,7 +13,7 @@ export function getUserByOAuth(url) {
 }
 
 export function allHouses() {
-  return fetch({url: '/houses', method: 'get'})
+  return fetch({url: '/api/houses', method: 'get'})
 }
 
 export function focusHouse(id) {
